@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="data/MandayaICCsTarragonaCADT_1.js"></script>
+        <script src="data/Clipped_2.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+            highlightLayer.openPopup();
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[6.799276079203205,126.07025195365222],[7.349275365080718,126.80853320365222]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_GoogleTerrainHybrid_0');
+        map.getPane('pane_GoogleTerrainHybrid_0').style.zIndex = 400;
+        var layer_GoogleTerrainHybrid_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleTerrainHybrid_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+        });
+        layer_GoogleTerrainHybrid_0;
+        map.addLayer(layer_GoogleTerrainHybrid_0);
+        function pop_MandayaICCsTarragonaCADT_1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Layer'] !== null ? autolinker.link(feature.properties['Layer'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PaperSpace'] !== null ? autolinker.link(feature.properties['PaperSpace'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SubClasses'] !== null ? autolinker.link(feature.properties['SubClasses'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Linetype'] !== null ? autolinker.link(feature.properties['Linetype'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['EntityHand'] !== null ? autolinker.link(feature.properties['EntityHand'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Text'] !== null ? autolinker.link(feature.properties['Text'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_MandayaICCsTarragonaCADT_1_0() {
+            return {
+                pane: 'pane_MandayaICCsTarragonaCADT_1',
+                opacity: 1,
+                color: 'rgba(193,21,21,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_MandayaICCsTarragonaCADT_1');
+        map.getPane('pane_MandayaICCsTarragonaCADT_1').style.zIndex = 401;
+        map.getPane('pane_MandayaICCsTarragonaCADT_1').style['mix-blend-mode'] = 'normal';
+        var layer_MandayaICCsTarragonaCADT_1 = new L.geoJson(json_MandayaICCsTarragonaCADT_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_MandayaICCsTarragonaCADT_1',
+            layerName: 'layer_MandayaICCsTarragonaCADT_1',
+            pane: 'pane_MandayaICCsTarragonaCADT_1',
+            onEachFeature: pop_MandayaICCsTarragonaCADT_1,
+            style: style_MandayaICCsTarragonaCADT_1_0,
+        });
+        bounds_group.addLayer(layer_MandayaICCsTarragonaCADT_1);
+        map.addLayer(layer_MandayaICCsTarragonaCADT_1);
+        function pop_Clipped_2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Layer'] !== null ? autolinker.link(feature.properties['Layer'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PaperSpace'] !== null ? autolinker.link(feature.properties['PaperSpace'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SubClasses'] !== null ? autolinker.link(feature.properties['SubClasses'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Linetype'] !== null ? autolinker.link(feature.properties['Linetype'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['EntityHandle'] !== null ? autolinker.link(feature.properties['EntityHandle'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Text'] !== null ? autolinker.link(feature.properties['Text'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Clipped_2_0(feature) {
+            switch(String(feature.properties['EntityHandle'])) {
+                case '29E':
+                    return {
+                pane: 'pane_Clipped_2',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(93,210,157,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '2A3':
+                    return {
+                pane: 'pane_Clipped_2',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,147,96,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '2A4':
+                    return {
+                pane: 'pane_Clipped_2',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(201,188,111,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '2A5':
+                    return {
+                pane: 'pane_Clipped_2',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(138,153,229,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '2A6':
+                    return {
+                pane: 'pane_Clipped_2',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(166,140,237,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '2A7':
+                    return {
+                pane: 'pane_Clipped_2',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(202,49,184,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '2A9':
+                    return {
+                pane: 'pane_Clipped_2',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(105,208,119,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '2AA':
+                    return {
+                pane: 'pane_Clipped_2',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(239,63,142,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '2AC':
+                    return {
+                pane: 'pane_Clipped_2',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(97,225,41,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '2AF':
+                    return {
+                pane: 'pane_Clipped_2',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(221,117,117,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '2B0':
+                    return {
+                pane: 'pane_Clipped_2',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(63,163,234,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '304':
+                    return {
+                pane: 'pane_Clipped_2',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(185,60,238,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '305':
+                    return {
+                pane: 'pane_Clipped_2',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(83,226,224,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_Clipped_2');
+        map.getPane('pane_Clipped_2').style.zIndex = 402;
+        map.getPane('pane_Clipped_2').style['mix-blend-mode'] = 'normal';
+        var layer_Clipped_2 = new L.geoJson(json_Clipped_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Clipped_2',
+            layerName: 'layer_Clipped_2',
+            pane: 'pane_Clipped_2',
+            onEachFeature: pop_Clipped_2,
+            style: style_Clipped_2_0,
+        });
+        bounds_group.addLayer(layer_Clipped_2);
+        map.addLayer(layer_Clipped_2);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'Clipped<br /><table><tr><td style="text-align: center;"><img src="legend/Clipped_2_Cabagayan0.png" /></td><td>Cabagayan</td></tr><tr><td style="text-align: center;"><img src="legend/Clipped_2_Limot1.png" /></td><td>Limot</td></tr><tr><td style="text-align: center;"><img src="legend/Clipped_2_Ompao2.png" /></td><td>Ompao</td></tr><tr><td style="text-align: center;"><img src="legend/Clipped_2_Tomoaong3.png" /></td><td>Tomoaong</td></tr><tr><td style="text-align: center;"><img src="legend/Clipped_2_Tubaon4.png" /></td><td>Tubaon</td></tr><tr><td style="text-align: center;"><img src="legend/Clipped_2_TarragonavsManay5.png" /></td><td>Tarragona vs. Manay</td></tr><tr><td style="text-align: center;"><img src="legend/Clipped_2_OldMacopa6.png" /></td><td>Old Macopa</td></tr><tr><td style="text-align: center;"><img src="legend/Clipped_2_Taocanga7.png" /></td><td>Taocanga</td></tr><tr><td style="text-align: center;"><img src="legend/Clipped_2_ManayvsLupon8.png" /></td><td>Manay vs. Lupon</td></tr><tr><td style="text-align: center;"><img src="legend/Clipped_2_Mayo9.png" /></td><td>Mayo</td></tr><tr><td style="text-align: center;"><img src="legend/Clipped_2_Tagabakid10.png" /></td><td>Tagabakid</td></tr><tr><td style="text-align: center;"><img src="legend/Clipped_2_Tubaon11.png" /></td><td>Tubaon</td></tr><tr><td style="text-align: center;"><img src="legend/Clipped_2_MatiCityvsTarragona12.png" /></td><td>Mati City vs. Tarragona</td></tr></table>': layer_Clipped_2,'<img src="legend/MandayaICCsTarragonaCADT_1.png" /> Mandaya ICCs, Tarragona CADT': layer_MandayaICCsTarragonaCADT_1,"Google Terrain Hybrid": layer_GoogleTerrainHybrid_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
